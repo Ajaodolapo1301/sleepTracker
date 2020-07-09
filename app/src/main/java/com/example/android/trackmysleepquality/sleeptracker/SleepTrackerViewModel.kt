@@ -27,9 +27,6 @@ import com.example.android.trackmysleepquality.database.SleepNight
 import kotlinx.coroutines.*
 import com.example.android.trackmysleepquality.formatNights
 
-/**
- * ViewModel for SleepTrackerFragment.
- */
 class SleepTrackerViewModel(val database: SleepDatabaseDao, application: Application) : AndroidViewModel(application) {
 
     private val vieModelJob = Job()
