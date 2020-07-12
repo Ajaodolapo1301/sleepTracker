@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.android.trackmysleepquality.convertDurationToFormatted
 import com.example.android.trackmysleepquality.convertNumericQualityToString
 
-//import com.example.android.trackmysleepquality.sleeptracker.MyViewHolder.Companion
+
 class SleepTrackerAdapter:RecyclerView.Adapter<MyViewHolder>(){
 
 
