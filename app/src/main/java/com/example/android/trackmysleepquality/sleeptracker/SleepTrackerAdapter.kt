@@ -1,37 +1,24 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import android.widget.TextView
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.R
-import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import com.example.android.trackmysleepquality.convertDurationToFormatted
 import com.example.android.trackmysleepquality.convertNumericQualityToString
+ import    androidx.recyclerview.widget.ListAdapter
+import com.example.android.trackmysleepquality.databinding.MyTextViewBinding
 
 
-class SleepTrackerAdapter:RecyclerView.Adapter<MyViewHolder>(){
-
-
-           var data = listOf<SleepNight>()
-        set(value) {
-            field = value
-        notifyDataSetChanged()
-        }
-
-    override fun getItemCount() =data.size
-
-
+class SleepTrackerAdapter : ListAdapter<SleepNight, SleepTrackerAdapter.MyViewHolder>(SleepDiff()){
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        var item = data[position]
+        var item = getItem(position)
         holder.bind(item)
-    }
 
+    }
 
 
 
@@ -42,42 +29,27 @@ class SleepTrackerAdapter:RecyclerView.Adapter<MyViewHolder>(){
 
 
 
-}
 
+    class MyViewHolder   private constructor(val binding: MyTextViewBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bind(item: SleepNight) {
+            binding.sleep = item
+            binding.executePendingBindings()
+        }
 
-
-class MyViewHolder   private constructor( ItemView: View) : RecyclerView.ViewHolder(ItemView){
-    var sleep_length:TextView = itemView.findViewById(R.id.sleep_length)
-    var sleepQuality:TextView = itemView.findViewById(R.id.quality_string)
-    var qualityImage:ImageView = itemView.findViewById(R.id.quality_image)
-
-
-    fun bind(item: SleepNight) {
-        val res=   itemView.context.resources
-        sleep_length.text = convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
-        sleepQuality.text =  convertNumericQualityToString(item.sleepQuality, res)
-
-
-
-        qualityImage.setImageResource(when (item.sleepQuality) {
-            0 -> R.drawable.ic_sleep_0
-            1 -> R.drawable.ic_sleep_1
-            2 -> R.drawable.ic_sleep_2
-            3 -> R.drawable.ic_sleep_3
-            4 -> R.drawable.ic_sleep_4
-            5 -> R.drawable.ic_sleep_5
-            else -> R.drawable.ic_launcher_sleep_tracker_background
-        })
-    }
-
-    companion object {
-        fun from(parent: ViewGroup): MyViewHolder {
-            val layoutInflator = LayoutInflater.from(parent.context)
-            val view = layoutInflator.inflate(R.layout.my_text_view, parent, false)
-            return MyViewHolder(view)
+        companion object {
+            fun from(parent: ViewGroup): MyViewHolder {
+                val layoutInflator = LayoutInflater.from(parent.context)
+              var  binding = MyTextViewBinding.inflate(layoutInflator, parent, false)
+                return MyViewHolder(binding)
+            }
         }
     }
+
 }
+
+
+
+
 
 
 class  SleepDiff: DiffUtil.ItemCallback<SleepNight>() {

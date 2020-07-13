@@ -114,7 +114,7 @@ fun formatNights(nights: List<SleepNight>, resources: Resources): Spanned {
 
 
 
-fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Resources): String {
+fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Resources): CharSequence? {
     val durationMilli = endTimeMilli - startTimeMilli
     val weekdayString = SimpleDateFormat("EEEE", Locale.getDefault()).format(startTimeMilli)
     return when {
