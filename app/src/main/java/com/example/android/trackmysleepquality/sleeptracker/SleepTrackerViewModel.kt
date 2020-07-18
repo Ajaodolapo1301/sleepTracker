@@ -67,6 +67,14 @@ private  var tonight = MutableLiveData<SleepNight?>()
 
 
 
+
+
+    private val _navigateToSleepDataQuality = MutableLiveData<Long>()
+    val navigateToSleepDataQuality
+        get() = _navigateToSleepDataQuality
+
+
+
     private var _showSnackbarEvent = MutableLiveData<Boolean>()
 
     val showSnackBarEvent: LiveData<Boolean>
@@ -78,6 +86,20 @@ private  var tonight = MutableLiveData<SleepNight?>()
     fun doneShowingSnackbar() {
         _showSnackbarEvent.value = false
     }
+
+
+
+    fun onSleepNightClicked(id: Long){
+        _navigateToSleepDataQuality.value = id
+    }
+
+
+    fun  onSleepDataQualityNavigated(){
+        _navigateToSleepDataQuality.value = null
+    }
+
+
+
 
 
 
@@ -179,9 +201,6 @@ val  stopButtonVisible = Transformations.map(tonight){ tonight ->
             database.clear()
         }
     }
-
-
-
 
 
 }
